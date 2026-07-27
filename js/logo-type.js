@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   var mq = window.matchMedia('(max-width:860px)');
-  if (mq.matches) return; // mobile: mantém estático
+  if (mq.matches) return;
 
   document.querySelectorAll('.logo-animated').forEach(function (logo) {
     var mark = logo.querySelector('.mark');
@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!mark || !bar || !textEl) return;
 
     var fullText = textEl.getAttribute('data-full') || textEl.textContent;
+    textEl.textContent = fullText;
+
+    var fullWidth = textEl.scrollWidth; // mede a largura real com o texto completo
+    logo.style.minWidth = (mark.offsetWidth + 10 + fullWidth) + 'px'; // reserva o espaço no elemento pai, desde já
+
     textEl.textContent = '';
 
     var cursor = document.createElement('span');
@@ -37,6 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
         window.setTimeout(typeNext, 45);
       }
       typeNext();
-    }, 2000); // aguarda os 2 ciclos de piscada (3 × 1s) antes de começar a digitar
+    }, 2000);
   });
 });
